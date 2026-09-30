@@ -176,6 +176,10 @@ footer{text-align:center;color:#565c67;font-size:11px;margin-top:35px}
       <div class="step" data-step="3"><div class="card" style="margin-top:15px">
         <div class="field"><label>اسم القناة</label><input id="channelName" placeholder="ERROR 404"></div>
         <div class="field"><label>ID القناة — اختياري (120363...@newsletter)</label><input id="channelId" dir="ltr" placeholder="120363xxxxxxxxxx@newsletter"></div>
+        <div class="field"><label>رابط القناة — اختياري</label><input id="channelLink" dir="ltr" placeholder="https://whatsapp.com/channel/..."></div>
+        <div class="field"><label>حقوق الاستيكر — اسم الحزمة</label><input id="stickerPack" placeholder="مثال: اسم بوتك"></div>
+        <div class="field"><label>حقوق الاستيكر — اسم المؤلف</label><input id="stickerAuthor" placeholder="مثال: اسمك"></div>
+        <p class="muted" style="margin:6px 0 0;font-size:13px">أي حقل فاضي بياخد قيمة تلقائية من بياناتك (اسم البوت / أول مطور). مفيش حاجة من حقوق القالب الأصلي بتفضل في نسختك.</p>
       </div></div>
       <div class="step" data-step="4"><div class="card" style="margin-top:15px"><h3 style="margin-top:0">مراجعة المعلومات</h3><div class="review" id="review"></div></div></div>
       <div class="step" data-step="5"><div class="card" style="margin-top:15px;text-align:center">
@@ -229,6 +233,9 @@ footer{text-align:center;color:#565c67;font-size:11px;margin-top:35px}
   <div class="field"><label>أرقام المطورين</label><input id="editDevNumbers" dir="ltr"></div>
   <div class="field"><label>اسم القناة</label><input id="editChannel"></div>
   <div class="field"><label>ID القناة</label><input id="editChannelId" dir="ltr"></div>
+  <div class="field"><label>رابط القناة</label><input id="editChannelLink" dir="ltr"></div>
+  <div class="field"><label>حقوق الاستيكر — الحزمة</label><input id="editStickerPack"></div>
+  <div class="field"><label>حقوق الاستيكر — المؤلف</label><input id="editStickerAuthor"></div>
   <button class="primary" data-act="saveEdit"><svg class="i"><use href="#i-check"/></svg>حفظ التعديل</button>
 </div></div>
 
@@ -356,7 +363,7 @@ async function setPhoto(photo){
 }
 
 /* ---------- صنع البوت ---------- */
-const F = ['botName','botNumber','devAr','devEn','devNumbers','channelName','channelId'];
+const F = ['botName','botNumber','devAr','devEn','devNumbers','channelName','channelId','channelLink','stickerPack','stickerAuthor'];
 const digits = s => String(s || '').replace(/\D/g, '');
 const splitNames = s => String(s || '').split(/[•,،|\n]+/).map(x => x.trim()).filter(Boolean);
 function normChannel(s){ s = String(s || '').trim(); if (/^\d{10,}$/.test(s)) return s + '@newsletter'; return /^\d+@newsletter$/.test(s) ? s : ''; }
@@ -377,23 +384,127 @@ function valid(){
     const nums = $('devNumbers').value.split(/[,،\s]+/).filter(Boolean).map(digits);
     if (!nums.length || nums.some(n => n.length < 8 || n.length > 15)) { toast('اكتب رقم مطور واحد على الأقل بشكل صحيح'); return false; }
   }
+  if (step === 3){
+    const cl = $('channelLink').value.trim();
+    if (cl && !normChannelLink(cl)) { toast('رابط القناة غير صحيح'); return false; }
+  }
   return true;
 }
 function renderReview(){
   const ch = $('channelId').value.trim(), okCh = normChannel(ch);
   const d = { 'اسم البوت': $('botName').value, 'رقم البوت': digits($('botNumber').value), 'المطورون': $('devAr').value || $('devEn').value, 'أرقام المطورين': $('devNumbers').value, 'القناة': $('channelName').value, 'ID القناة': ch ? (okCh || 'غير صالح — هيتجاهل') : 'الافتراضي' };
+  Object.assign(d, { 'رابط القناة': $('channelLink').value.trim() ? (normChannelLink($('channelLink').value) || 'غير صالح — هيتجاهل') : 'هيبقى واتساب المطور', 'حزمة الاستيكر': $('stickerPack').value || $('botName').value, 'مؤلف الاستيكر': $('stickerAuthor').value || '—' });
   $('review').innerHTML = Object.entries(d).map(([k,v]) => `<div><span>${esc(k)}</span><b>${esc(v || '—')}</b></div>`).join('');
 }
-function readForm(){ return { name: $('botName').value.trim(), number: digits($('botNumber').value), devAr: $('devAr').value.trim(), devEn: $('devEn').value.trim(), devNumbers: $('devNumbers').value.trim(), channelName: $('channelName').value.trim(), channelId: normChannel($('channelId').value) }; }
+function readForm(){ return { name: $('botName').value.trim(), number: digits($('botNumber').value), devAr: $('devAr').value.trim(), devEn: $('devEn').value.trim(), devNumbers: $('devNumbers').value.trim(), channelName: $('channelName').value.trim(), channelId: normChannel($('channelId').value), channelLink: normChannelLink($('channelLink').value), stickerPack: $('stickerPack').value.trim(), stickerAuthor: $('stickerAuthor').value.trim() }; }
 function botConfig(b){
   const ar = splitNames(b.devAr), en = splitNames(b.devEn);
   const owners = String(b.devNumbers || '').split(/[,،\s]+/).filter(Boolean).map(digits).filter(n => n.length >= 8).map((n, i) => ({ name: ar[i] || en[i] || 'Owner', jid: n + '@s.whatsapp.net' }));
-  return { botName: b.name, botNumber: b.number, owners, channelName: b.channelName || '', channelId: b.channelId || '' };
+  return { botName: b.name, botNumber: b.number, owners, channelName: b.channelName || '', channelId: b.channelId || '', channelLink: b.channelLink || '', stickerPack: b.stickerPack || '', stickerAuthor: b.stickerAuthor || '' };
 }
+
+/* ---------- تبديل حقوق البوت جوه ملفات القالب ----------
+   القيم الأصلية (ORIG) هي اللي مكتوبة ثابت في القالب، والموقع بيبدّلها بقيم صاحب النسخة.
+   أسطر الكومنتات (هيدر المطورين الأصليين للبلجنز) مش بتتلمس. */
+const ORIG = {
+  "chId": "120363422581600030@newsletter",
+  "chUrl": "https://whatsapp.com/channel/0029VbBbvWcJ3jv1T55BmR0f",
+  "chName": "\u269c\ufe0f \ud835\udc15\ud835\udc00\ud835\udc04\ud835\udc0b\ud835\udc0c\ud835\udc0e\ud835\udc11\ud835\udc04 | \ud835\udc0e\ud835\udc1f\ud835\udc1f\ud835\udc22\ud835\udc1c\ud835\udc22\ud835\udc1a\ud835\udc25 \ud835\udc12\ud835\udc32\ud835\udc2c\ud835\udc2d\ud835\udc1e\ud835\udc26",
+  "botName": "\u2661 \ud835\udc7d\ud835\udc68\ud835\udc6c\ud835\udc73\ud835\udc74\ud835\udc76\ud835\udc79\ud835\udc6c \ud835\udc69\ud835\udc76\ud835\udc7b\ud83d\udc68\ud83c\udffb\u200d\ud83d\udcbb \u3008",
+  "venom": "\u25e5\u25e3 \ud835\udc15\ud835\udc6c\ud835\udc75\ud835\udd46\ud835\udc40 \u25e2\u25e4",
+  "escanor": "\ud835\udc0b\ud835\udc28\ud835\udc2b\ud835\udc1d \ud835\udc04\ud835\udc12\ud835\udc02\ud835\udc00\ud835\udc0d\ud835\udee9\ud835\udc11",
+  "drakon": "\ud835\udc0b\ud835\udc28\ud835\udc2b\ud835\udc1d \ud835\udc03\ud835\udc11\ud835\udc00\ud835\udc0a\ud835\udc0e\ud835\udc0d",
+  "sayko": "\ud835\udc46\ud835\udc34\ud835\udc4c\ud835\udc3e\ud835\udc42 ~ \ud835\udc46\ud835\udc3e",
+  "repo": "https://github.com/moreand458-eng/Oracle-bot",
+  "group": "https://chat.whatsapp.com/BR3vHZUaLjy1qwhS3ttQpJ?s=cl&p=a&ilr=1"
+};
+const EMPTY_DB = { groups: {}, users: {}, extraOwners: [] };
+const EMPTY_SETTINGS = { __replies: {}, __reminders: [], __castle: {}, __clash: {}, __system: { disabledCommands: [], disabledCategories: [] }, __reactionSubs: {} };
+const DUMMY_CH = '120363000000000000@newsletter';
+const jsSafe = s => String(s).replace(/\\/g, '\\\\').replace(/'/g, "\\'").replace(/"/g, '\\"').replace(/`/g, '\\`').replace(/\$\{/g, '\\${').replace(/[\r\n]+/g, ' ');
+const jsonSafe = s => JSON.stringify(String(s)).slice(1, -1);
+const isCommentLine = l => /^\s*(\/\/|\/\*|\*(\s|\/|$))/.test(l);
+function normChannelLink(s){
+  s = String(s || '').trim(); const m = s.match(/whatsapp\.com\/channel\/([A-Za-z0-9]+)/);
+  if (m) return 'https://whatsapp.com/channel/' + m[1];
+  return /^[A-Za-z0-9]{20,}$/.test(s) ? 'https://whatsapp.com/channel/' + s : '';
+}
+function brandInfo(b){
+  const nums = String(b.devNumbers || '').split(/[,\u060c\s]+/).filter(Boolean).map(digits).filter(n => n.length >= 8);
+  const ar = splitNames(b.devAr), en = splitNames(b.devEn);
+  const devs = nums.map((n, i) => ({ num: n, ar: ar[i] || en[i] || 'Owner', en: en[i] || ar[i] || 'Owner' }));
+  if (!devs.length) devs.push({ num: digits(b.number), ar: 'Owner', en: 'Owner' });
+  const d = i => devs[i] || devs[0];
+  const code8 = ((String(b.name).normalize('NFKC').replace(/[^A-Za-z0-9]/g, '').toUpperCase()) + digits(b.number)).slice(0, 8);
+  return {
+    name: b.name, number: digits(b.number), devs, d, code8,
+    chName: b.channelName || b.name, chId: b.channelId || DUMMY_CH,
+    chUrl: normChannelLink(b.channelLink) || ('https://wa.me/' + devs[0].num),
+    pack: b.stickerPack || b.name, author: b.stickerAuthor || devs[0].en
+  };
+}
+function rebrandJs(path, text, I){
+  const S = jsSafe, d = I.d, base = path.split('/').pop();
+  const OWN = `const OWNERS_DATA = [\n${I.devs.map(v => `    { name: '${S(v.ar)}', jid: '${v.num}@s.whatsapp.net', lid: '', displayName: '${S(v.en)}' },`).join('\n')}\n];`;
+  const SUP_URL = `const SUPPORT_TEAM = [\n${I.devs.slice(0, 2).map(v => `    { name: '${S(v.ar)}', url: 'https://wa.me/${v.num}' }`).join(',\n')}\n];`;
+  const SUP_JID = `const SUPPORT_TEAM = [\n${I.devs.slice(0, 2).map(v => `    { name: '${S(v.ar)}', jid: '${v.num}@s.whatsapp.net' }`).join(',\n')}\n];`;
+  const keys = [...new Set(I.devs.flatMap(v => [v.ar.toLowerCase(), v.en.toLowerCase()]))];
+  const DEVS = `const DEVS = {\n${I.devs.flatMap(v => [v.ar.toLowerCase(), v.en.toLowerCase()].filter((k, i, a) => a.indexOf(k) === i).map(k => `    '${S(k)}': { name: '${S(v.ar)}', jid: '${v.num}' },`)).join('\n')}\n};`;
+  // 1) بلوكات كاملة
+  if (base === 'control.js'){ text = text.replace(/const OWNERS_DATA = \[[\s\S]*?\n\];/, () => OWN).replace(/const SUPPORT_TEAM = \[[\s\S]*?\n\];/, () => SUP_URL); }
+  if (base === 'support.js') text = text.replace(/const SUPPORT_TEAM = \[[\s\S]*?\n\];/, () => SUP_JID);
+  if (base === 'owner.js') text = text.replace(/const DEVS = \{[\s\S]*?\n\};/, () => DEVS);
+  if (base === 'auto-join-channel.js') text = text.replace(/const defaultLinks = \[[\s\S]*?\n\];/, () => `const defaultLinks = [${I.chUrl.includes('/channel/') ? `\n    { url: '${I.chUrl}', type: 'channel' }\n` : ''}];`);
+  if (base === 'script.js') text = text.replace(/GitHub: _\*[^\n]*\*_\s*\n\s*\nVideo: _\*[^\n]*\*_/, () => `Channel: _*${I.chUrl}*_`);
+  if (base === 'sub.js') text = text.replace(/SubBots\.pariCode\("VAELMORE"\)/, () => `SubBots.pariCode("${I.code8}")`);
+  if (base === 'index.js') text = text.replace(/copyright:\s*\{[^}]*\}/, () => `copyright: { pack: '${S(I.pack)}', author: '${S(I.author)}' }`);
+  if (base === 'utils.js') text = text.replace(/options\.pack \|\| '[^']*'/, () => `options.pack || '${S(I.pack)}'`).replace(/options\.author \|\| '[^']*'/, () => `options.author || '${S(I.author)}'`);
+  if (base === 'gifsticker.js' || base === 'qc.js') text = text.replace(/pack:\s*'[^'\n]*'/, () => `pack: '${S(I.pack)}'`).replace(/author:\s*'VAELMORE'/, () => `author: '${S(I.author)}'`);
+  if (base === 'wm.js') text = text.replace(/\|\| 'VAELMORE'/, () => `|| '${S(I.author)}'`).replace(/\[pack = '[^'\n]*'/, () => `[pack = '${S(I.pack)}'`);
+  // 2) استبدال سطر بسطر (من غير الكومنتات)
+  const O = ORIG, rules = [
+    [O.botName, I.name], [O.chName, I.chName], [O.chId, I.chId], [O.chUrl, I.chUrl], [O.repo, I.chUrl], [O.group, I.chUrl],
+    [O.venom, I.d(0).ar], [O.drakon, I.d(1).ar], [O.escanor, I.d(1).ar], [O.sayko, I.d(1).ar], ['\u0627\u0644\u0634\u064a\u0637\u0627\u0646\u0647', I.d(2).ar],
+    ['\u0625\u0633\u0643\u0627\u0646\u0648\u0631', I.d(1).ar], ['\u0641\u064a\u0646\u0648\u0645', I.d(0).ar],
+    ['201065948582', I.d(0).num], ['79312265574', I.d(1).num], ['201092178171', I.d(1).num], ['201273317758', I.d(2).num], ['201090406441', I.d(1).num],
+    ['9647882892089', I.number], ['110462431670456@lid', ''], ['275561477836913@lid', ''], ['184726359014827@lid', '']
+  ];
+  return text.split('\n').map(l => {
+    if (isCommentLine(l)) return l;
+    for (const [from, to] of rules) if (from && l.includes(from)) l = l.split(from).join(S(to));
+    l = l.replace(/displayName:\s*'(Venom|Lord Drakon)'/g, (m, k) => `displayName: '${S(k === 'Venom' ? I.d(0).en : I.d(1).en)}'`);
+    return brandWords(l, I.name, S);
+  }).join('\n');
+}
+function brandWords(l, name, S){
+  l = l.replace(/[\u{1D400}-\u{1D7FF}]{8}(?![\u{1D400}-\u{1D7FF}])(?:\s+[\u{1D400}-\u{1D7FF}]{3}(?![\u{1D400}-\u{1D7FF}]))?/gu, m => { const n = m.normalize('NFKC').toUpperCase(); return (n === 'VAELMORE' || n === 'VAELMORE BOT') ? S(name) : m; });
+  return l.replace(/(?<![A-Za-z0-9_\-\/.])VAELMORE(?: BOT)?(?![A-Za-z0-9_\-])/g, () => S(name));
+}
+function rebrandText(path, text, b){
+  if (/(^|\/)(node_modules|sessions?|auth_info)\//.test(path)) return text;
+  const I = brandInfo(b), base = path.split('/').pop();
+  if (/\.js$/.test(path)) return rebrandJs(path, text, I);
+  if (base === 'database.json') return JSON.stringify(EMPTY_DB, null, 2);
+  if (base === 'settings.json' && /system\//.test(path)) return JSON.stringify(EMPTY_SETTINGS, null, 2);
+  if (base === 'group_schedule.json') return '{}';
+  if (base === 'links.json') return JSON.stringify({ channel: { label: 'WhatsApp Channel', url: I.chUrl, type: 'whatsapp' } }, null, 2);
+  if (base === 'package.json') return text.replace(/"description":\s*"[^"]*"/, () => `"description": "${jsonSafe(I.name)}"`);
+  if (/README\.md$/.test(path)) return brandWords(text.replace(/\n/g, '\n'), I.name, s => s);
+  return text;
+}
+async function brandZip(zip, b){
+  const names = Object.keys(zip.files).filter(n => !zip.files[n].dir && /\.(js|json|md)$/.test(n));
+  for (const n of names){
+    const t = await zip.file(n).async('string'), r = rebrandText(n, t, b);
+    if (r !== t) zip.file(n, r);
+  }
+}
+
 async function makeZip(b){
   if (typeof JSZip === 'undefined') throw new Error('مكتبة الـ ZIP مش اتحملت — اتأكد من الإنترنت');
   let buf; try { const r = await fetch(TEMPLATE_URL); if (!r.ok) throw 0; buf = await r.arrayBuffer(); } catch { throw new Error('ملف القالب VAELMORE_MINI.zip مش موجود جنب index.html (لازم الموقع يتفتح من استضافة مش من الملف مباشرة)'); }
   const zip = await JSZip.loadAsync(buf), old = Object.keys(zip.files).find(n => n.endsWith('bot.config.json'));
+  await brandZip(zip, b);   // يبدّل كل الحقوق الثابتة جوه ملفات القالب
   zip.file(old || 'vaelmore-bot/bot.config.json', JSON.stringify(botConfig(b), null, 2));
   const blob = await zip.generateAsync({ type: 'blob', compression: 'DEFLATE' });
   const a = document.createElement('a'), u = URL.createObjectURL(blob);
@@ -433,12 +544,12 @@ function renderBots(){
 function editBot(id){
   const b = myBots.find(x => x.id === id); if (!b) return; editingId = id;
   $('editName').value = b.name; $('editNumber').value = b.number; $('editDevAr').value = b.devAr || ''; $('editDevEn').value = b.devEn || '';
-  $('editDevNumbers').value = b.devNumbers || ''; $('editChannel').value = b.channelName || ''; $('editChannelId').value = b.channelId || '';
+  $('editDevNumbers').value = b.devNumbers || ''; $('editChannel').value = b.channelName || ''; $('editChannelId').value = b.channelId || ''; $('editChannelLink').value = b.channelLink || ''; $('editStickerPack').value = b.stickerPack || ''; $('editStickerAuthor').value = b.stickerAuthor || '';
   $('editModal').classList.add('open');
 }
 async function saveEdit(){
   const b = myBots.find(x => x.id === editingId); if (!b) return;
-  const n = { name: $('editName').value.trim(), number: digits($('editNumber').value), devAr: $('editDevAr').value.trim(), devEn: $('editDevEn').value.trim(), devNumbers: $('editDevNumbers').value.trim(), channelName: $('editChannel').value.trim(), channelId: normChannel($('editChannelId').value) };
+  const n = { name: $('editName').value.trim(), number: digits($('editNumber').value), devAr: $('editDevAr').value.trim(), devEn: $('editDevEn').value.trim(), devNumbers: $('editDevNumbers').value.trim(), channelName: $('editChannel').value.trim(), channelId: normChannel($('editChannelId').value), channelLink: normChannelLink($('editChannelLink').value), stickerPack: $('editStickerPack').value.trim(), stickerAuthor: $('editStickerAuthor').value.trim() };
   if (!n.name || n.number.length < 8) return toast('اسم ورقم البوت مطلوبين');
   try { await updateDoc(doc(db, 'bots', editingId), n); Object.assign(b, n); $('editModal').classList.remove('open'); renderBots(); toast('تم حفظ التعديل — حمّل النسخة تاني عشان تتطبق'); } catch (e) { toast(e.message); }
 }
