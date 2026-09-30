@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>ERROR 404 | BOT FACTORY</title>
+<style>
+:root{--bg:#050609;--panel:#0b0d12;--line:#242833;--text:#f2f3f5;--muted:#858b98;--danger:#8f151f;--shadow:0 20px 70px rgba(0,0,0,.55)}
+*{box-sizing:border-box}
+html,body{margin:0;min-height:100%;background:radial-gradient(circle at 50% -10%,#1b1e26 0,#090a0e 35%,#050609 70%);color:var(--text);font-family:system-ui,-apple-system,"Segoe UI",Tahoma,Arial,sans-serif}
+button,input,textarea{font:inherit}button{cursor:pointer}
+svg.i{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;flex:none}
+.app{max-width:1100px;margin:auto;padding:0 16px 50px}
+/* top bar */
+.top{position:sticky;top:0;z-index:5;display:flex;align-items:center;gap:12px;padding:12px 0;background:linear-gradient(#050609 70%,transparent);margin-bottom:10px}
+.iconbtn{width:44px;height:44px;display:grid;place-items:center;background:#0c0e13;border:1px solid var(--line);color:#dfe2e8;border-radius:12px;padding:0}
+.brand{display:flex;align-items:center;gap:10px;flex:1}.mark{width:38px;height:38px;border:1px solid #444a56;display:grid;place-items:center;border-radius:11px;background:#0d0f14;font-weight:900;font-size:13px}
+.brand h1{font-size:15px;margin:0;letter-spacing:2px}.brand small{display:block;color:var(--muted);font-size:10px;margin-top:2px}
+.avatar{border-radius:50%;background:#171a22 center/cover no-repeat;border:1px solid #3a404c;display:grid;place-items:center;color:#9aa0ad;overflow:hidden;flex:none}
+.avatar.s{width:40px;height:40px}.avatar.m{width:52px;height:52px}.avatar.l{width:110px;height:110px}.avatar svg{width:55%;height:55%}
+/* drawer */
+.overlay{position:fixed;inset:0;background:rgba(0,0,0,.6);opacity:0;pointer-events:none;transition:.25s;z-index:30}
+.overlay.open{opacity:1;pointer-events:auto}
+.drawer{position:fixed;top:0;right:0;bottom:0;width:min(290px,84vw);background:#0a0c11;border-left:1px solid var(--line);transform:translateX(105%);transition:.28s;z-index:31;display:flex;flex-direction:column;padding:calc(18px + env(safe-area-inset-top,0px)) 14px calc(18px + env(safe-area-inset-bottom,0px));box-shadow:var(--shadow)}
+.drawer.open{transform:none}
+.dhead{display:flex;align-items:center;gap:12px;padding-bottom:16px;border-bottom:1px solid var(--line);margin-bottom:12px}
+.dhead b{display:block;font-size:15px}.dhead small{color:var(--muted);font-size:11px;word-break:break-all}
+.nav{display:flex;flex-direction:column;gap:6px;flex:1}
+.nav button,.logout{display:flex;align-items:center;gap:12px;background:none;border:1px solid transparent;color:#cfd3db;padding:13px 12px;border-radius:12px;text-align:right;width:100%}
+.nav button.on{background:#141821;border-color:#2b303b;color:#fff}
+.logout{color:#e6a9ad}
+/* generic */
+.page{display:none}.page.active{display:block}
+.hero{border:1px solid var(--line);border-radius:24px;padding:32px 20px;background:linear-gradient(145deg,rgba(255,255,255,.035),rgba(255,255,255,.008));box-shadow:var(--shadow);position:relative;overflow:hidden}
+.hero:after{content:"404";position:absolute;left:-20px;bottom:-70px;font-size:210px;font-weight:900;color:rgba(255,255,255,.025);pointer-events:none}
+.eyebrow{color:#9298a4;font-size:12px;letter-spacing:3px}.hero h2{font-size:clamp(32px,8vw,64px);line-height:.98;margin:12px 0}.hero p{color:#9ba1ad;max-width:650px;line-height:1.8}
+.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
+.primary,.ghost,.danger{display:inline-flex;align-items:center;justify-content:center;gap:8px;border-radius:11px;padding:11px 16px}
+.primary{border:1px solid #5c626d;background:#e9ebee;color:#08090b;font-weight:800}
+.ghost{background:#0c0e13;border:1px solid var(--line);color:#dfe2e8}
+.danger{border:1px solid #55141a;background:#22090c;color:#f0c5c8}
+button:disabled{opacity:.5;cursor:default}
+.sm{padding:8px 11px;font-size:13px}
+.section-title{display:flex;justify-content:space-between;align-items:center;margin:26px 0 12px}.section-title h3{margin:0;font-size:18px}.muted{color:var(--muted)}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px}
+.card{background:linear-gradient(145deg,#0d1016,#090b10);border:1px solid var(--line);border-radius:18px;padding:18px}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:10px}
+.stat{padding:14px;border:1px solid var(--line);border-radius:14px;background:#0a0c11}.stat b{font-size:24px;display:block}.stat span{font-size:12px;color:var(--muted)}
+label{display:block;font-size:13px;color:#b5bac4;margin:0 0 7px}.field{margin-bottom:15px}
+input,textarea{width:100%;background:#080a0e;border:1px solid #292e38;color:#f1f2f4;border-radius:11px;padding:13px;outline:none;direction:rtl}
+input:focus{border-color:#666d79}input[dir=ltr]{direction:ltr;text-align:left}
+.form{max-width:760px;margin:auto}.step{display:none}.step.active{display:block}
+.progress-top{display:flex;justify-content:space-between;color:var(--muted);font-size:12px;margin-bottom:10px}
+.bar{height:6px;background:#151820;border-radius:99px;overflow:hidden}.bar i{display:block;height:100%;width:20%;background:#d9dce1;transition:.3s}
+.step-actions{display:flex;justify-content:space-between;gap:10px;margin-top:20px}
+.review{display:grid;gap:4px}.review div{display:flex;justify-content:space-between;gap:12px;padding:11px 4px;border-bottom:1px solid #1c2028}.review span:first-child{color:var(--muted)}.review b{text-align:left;word-break:break-word}
+.bot-card h4{margin:0 0 6px;font-size:19px}.bot-card p{margin:4px 0;color:#9298a4;font-size:13px}
+.empty{text-align:center;padding:32px 10px;color:var(--muted);border:1px dashed #292e38;border-radius:16px;grid-column:1/-1}
+.tablewrap{overflow-x:auto;border:1px solid var(--line);border-radius:14px}
+table{width:100%;border-collapse:collapse;font-size:13px;min-width:560px}th,td{padding:10px 12px;text-align:right;border-bottom:1px solid #1a1d25;white-space:nowrap}th{color:var(--muted);font-weight:600;background:#0a0c11}
+td .who{display:flex;align-items:center;gap:9px}
+.chart{display:flex;align-items:flex-end;gap:8px;height:120px;padding-top:10px}.chart div{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;height:100%;gap:5px;font-size:11px;color:var(--muted)}.chart i{display:block;width:100%;background:#d9dce1;border-radius:6px 6px 0 0;min-height:3px}
+.tabs{display:flex;gap:6px;background:#0a0c11;border:1px solid var(--line);border-radius:12px;padding:4px;margin-bottom:16px}.tabs button{flex:1;background:none;border:0;color:#9aa0ad;padding:10px;border-radius:9px}.tabs button.on{background:#1a1e27;color:#fff}
+.gbtn{display:flex;align-items:center;justify-content:center;gap:10px;width:100%;background:#fff;color:#222;border:0;border-radius:11px;padding:12px;font-weight:700}
+.gbtn svg{width:20px;height:20px}.or{text-align:center;color:var(--muted);font-size:12px;margin:14px 0}
+.authbox{max-width:430px;margin:40px auto}
+.notice{border:1px solid #5a4a16;background:#1c1705;color:#f0dc9a;border-radius:12px;padding:12px 14px;font-size:13px;line-height:1.8;margin-bottom:14px}
+.link{background:none;border:0;color:#9fb4ff;padding:0;font-size:13px}
+#toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%) translateY(20px);opacity:0;pointer-events:none;background:#eef0f3;color:#090a0c;padding:11px 16px;border-radius:10px;font-size:13px;transition:.25s;z-index:60;max-width:90vw;text-align:center}
+#toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+.modal{position:fixed;inset:0;background:rgba(0,0,0,.75);display:none;place-items:center;padding:18px;z-index:40}.modal.open{display:grid}
+.modal-box{width:min(620px,100%);max-height:92vh;overflow:auto;background:#0b0d12;border:1px solid #2a2f39;border-radius:18px;padding:20px;box-shadow:var(--shadow)}
+.modal-box h3{margin:0 0 14px;display:flex;justify-content:space-between;align-items:center}
+.camera{position:relative;width:110px;margin:0 auto 10px}.camera button{position:absolute;bottom:0;left:0;width:36px;height:36px;border-radius:50%;background:#e9ebee;color:#08090b;border:2px solid #0b0d12;display:grid;place-items:center;padding:0}
+footer{text-align:center;color:#565c67;font-size:11px;margin-top:35px}
+.hide{display:none!important}
+@media(max-width:600px){.hero{padding:24px 16px}}
+</style>
+</head>
+<body>
+
+<!-- أيقونات SVG من الكود نفسه (مفيش أي مكتبة أيقونات) -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></symbol>
+  <symbol id="i-home" viewBox="0 0 24 24"><path d="M3 11.5 12 4l9 7.5"/><path d="M5.5 10v9.5h13V10"/><path d="M10 19.5v-5h4v5"/></symbol>
+  <symbol id="i-user" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4.5 20c.8-3.7 3.8-5.5 7.5-5.5s6.7 1.8 7.5 5.5"/></symbol>
+  <symbol id="i-bot" viewBox="0 0 24 24"><rect x="4" y="8" width="16" height="11" rx="3"/><path d="M12 4v4M9 13v1.5M15 13v1.5M2 13v3M22 13v3"/><circle cx="12" cy="3.5" r="1"/></symbol>
+  <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+  <symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 3 5 6v5.5c0 4.3 2.9 7.6 7 9.5 4.1-1.9 7-5.2 7-9.5V6l-7-3Z"/><path d="m9 12 2.2 2.2L15.5 10"/></symbol>
+  <symbol id="i-logout" viewBox="0 0 24 24"><path d="M10 4H5.5A1.5 1.5 0 0 0 4 5.5v13A1.5 1.5 0 0 0 5.5 20H10"/><path d="M15 8l4 4-4 4M19 12H9"/></symbol>
+  <symbol id="i-edit" viewBox="0 0 24 24"><path d="M4 20h4L19 9a2.8 2.8 0 0 0-4-4L4 16v4Z"/><path d="m13.5 6.5 4 4"/></symbol>
+  <symbol id="i-trash" viewBox="0 0 24 24"><path d="M4 7h16M9 7V4.5h6V7M6.5 7l.8 12.5h9.4L17.5 7M10 11v5M14 11v5"/></symbol>
+  <symbol id="i-download" viewBox="0 0 24 24"><path d="M12 4v11M7.5 11 12 15.5 16.5 11M5 20h14"/></symbol>
+  <symbol id="i-back" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></symbol>
+  <symbol id="i-next" viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><path d="m5 12.5 4.5 4.5L19 7.5"/></symbol>
+  <symbol id="i-camera" viewBox="0 0 24 24"><path d="M4 8.5A1.5 1.5 0 0 1 5.5 7H8l1.3-2h5.4L16 7h2.5A1.5 1.5 0 0 1 20 8.5v9a1.5 1.5 0 0 1-1.5 1.5h-13A1.5 1.5 0 0 1 4 17.5v-9Z"/><circle cx="12" cy="13" r="3.5"/></symbol>
+  <symbol id="i-users" viewBox="0 0 24 24"><circle cx="9" cy="8.5" r="3.5"/><path d="M2.5 19.5c.6-3.3 3.1-5 6.5-5s5.9 1.7 6.5 5"/><path d="M16 5.3a3.5 3.5 0 0 1 0 6.4M18.5 14.8c1.7.6 2.7 2 3 4.7"/></symbol>
+  <symbol id="i-bolt" viewBox="0 0 24 24"><path d="M13 3 5 13.5h6L10 21l8-10.5h-6L13 3Z"/></symbol>
+  <symbol id="i-close" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></symbol>
+</svg>
+
+<!-- شاشة الدخول -->
+<div id="authView" class="app hide">
+  <div class="authbox">
+    <div class="brand" style="justify-content:center;margin-bottom:22px"><div class="mark">404</div><div><h1>ERROR 404</h1><small>BOT FACTORY</small></div></div>
+    <div id="setupNote" class="notice hide"></div>
+    <div class="card">
+      <div class="tabs"><button id="tabLogin" class="on" data-act="authTab" data-tab="login">تسجيل الدخول</button><button id="tabSignup" data-act="authTab" data-tab="signup">إنشاء حساب</button></div>
+      <button class="gbtn" data-act="google">
+        <svg viewBox="0 0 48 48"><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/><path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/></svg>
+        المتابعة بحساب جوجل
+      </button>
+      <div class="or">— أو بالبريد —</div>
+      <div class="field hide" id="nameField"><label>الاسم</label><input id="aName" placeholder="اسمك"></div>
+      <div class="field"><label>البريد الإلكتروني</label><input id="aEmail" type="email" dir="ltr" placeholder="name@example.com" autocomplete="email"></div>
+      <div class="field"><label>كلمة المرور</label><input id="aPass" type="password" dir="ltr" placeholder="6 حروف على الأقل" autocomplete="current-password"></div>
+      <button class="primary" style="width:100%" id="authSubmit" data-act="emailAuth">دخول</button>
+      <div style="text-align:center;margin-top:12px"><button class="link" data-act="reset">نسيت كلمة المرور؟</button></div>
+    </div>
+  </div>
+</div>
+
+<!-- التطبيق -->
+<div id="appView" class="app hide">
+  <div class="top">
+    <button class="iconbtn" data-act="openMenu" aria-label="القائمة"><svg class="i" style="width:24px;height:24px"><use href="#i-menu"/></svg></button>
+    <div class="brand"><div class="mark">404</div><div><h1>ERROR 404</h1><small>BOT FACTORY</small></div></div>
+    <div class="avatar s" id="topAvatar" data-act="go" data-page="profile" style="cursor:pointer"></div>
+  </div>
+
+  <section id="home" class="page active">
+    <div class="hero">
+      <div class="eyebrow">SYSTEM // 404</div>
+      <h2>ERROR 404<br>NOT FOUND</h2>
+      <p>منصة لصناعة وإدارة نسخ البوتات. اختار بياناتك وحمّل نسختك جاهزة للتشغيل.</p>
+      <div class="actions"><button class="primary" data-act="startCreate"><svg class="i"><use href="#i-plus"/></svg>إنشاء نسخة بوت</button><button class="ghost" data-act="go" data-page="profile"><svg class="i"><use href="#i-user"/></svg>البروفايل</button></div>
+    </div>
+    <div class="section-title"><h3>آخر النسخ</h3><span class="muted" id="homeCount">0 نسخة</span></div>
+    <div id="homeBots" class="grid"></div>
+  </section>
+
+  <section id="profile" class="page">
+    <div class="section-title"><h3>البروفايل</h3></div>
+    <div class="card" style="text-align:center">
+      <div class="camera"><div class="avatar l" id="profAvatar"></div><button data-act="pickPhoto" aria-label="تغيير الصورة"><svg class="i" style="width:18px;height:18px"><use href="#i-camera"/></svg></button></div>
+      <input type="file" id="photoInput" accept="image/*" class="hide">
+      <div class="field" style="max-width:380px;margin:14px auto"><label>الاسم</label><input id="profName" maxlength="40"></div>
+      <div class="muted" id="profEmail" style="font-size:13px;margin-bottom:14px;direction:ltr"></div>
+      <div class="actions" style="justify-content:center;margin-top:0"><button class="primary" data-act="saveProfile"><svg class="i"><use href="#i-check"/></svg>حفظ</button><button class="ghost" data-act="removePhoto">حذف الصورة</button></div>
+    </div>
+    <div class="section-title"><h3>إحصائياتي</h3></div>
+    <div class="stats">
+      <div class="stat"><b id="sBots">0</b><span>نسخ تم إنشاؤها</span></div>
+      <div class="stat"><b id="sDl">0</b><span>مرات التحميل</span></div>
+      <div class="stat"><b id="sSince">—</b><span>عضو منذ</span></div>
+    </div>
+    <div class="section-title"><h3>نسخي</h3></div>
+    <div id="profileBots" class="grid"></div>
+  </section>
+
+  <section id="create" class="page">
+    <div class="form">
+      <div class="section-title"><h3>إنشاء بوت جديد</h3><span id="stepLabel">1 / 5</span></div>
+      <div class="progress-top"><span>BOT BUILDER</span><span id="progressText">20%</span></div>
+      <div class="bar"><i id="progressBar"></i></div>
+      <div class="step active" data-step="1"><div class="card" style="margin-top:15px">
+        <div class="field"><label>اسم البوت</label><input id="botName" placeholder="مثال: VAELMORE BOT"></div>
+        <div class="field"><label>رقم البوت (بكود الدولة)</label><input id="botNumber" dir="ltr" inputmode="tel" placeholder="2010xxxxxxxx"></div>
+      </div></div>
+      <div class="step" data-step="2"><div class="card" style="margin-top:15px">
+        <div class="field"><label>أسماء المطورين بالعربي (افصل بـ • أو ,)</label><input id="devAr" placeholder="اسكانور • فينوم"></div>
+        <div class="field"><label>Developers — English</label><input id="devEn" dir="ltr" placeholder="ESCANOR • VENOM"></div>
+        <div class="field"><label>أرقام المطورين (بنفس الترتيب)</label><input id="devNumbers" dir="ltr" inputmode="tel" placeholder="2010xxxxxxx, 2011xxxxxxx"></div>
+      </div></div>
+      <div class="step" data-step="3"><div class="card" style="margin-top:15px">
+        <div class="field"><label>اسم القناة</label><input id="channelName" placeholder="ERROR 404"></div>
+        <div class="field"><label>ID القناة — اختياري (120363...@newsletter)</label><input id="channelId" dir="ltr" placeholder="120363xxxxxxxxxx@newsletter"></div>
+      </div></div>
+      <div class="step" data-step="4"><div class="card" style="margin-top:15px"><h3 style="margin-top:0">مراجعة المعلومات</h3><div class="review" id="review"></div></div></div>
+      <div class="step" data-step="5"><div class="card" style="margin-top:15px;text-align:center">
+        <h3>جاهز للإنشاء</h3>
+        <p class="muted">هيتحفظ في حسابك، وتنزل نسخة البوت ZIP فيها إعداداتك جاهزة.</p>
+        <div class="bar" style="margin:20px 0"><i id="buildBar" style="width:0"></i></div>
+        <b id="buildStatus">اضغط إنشاء وتحميل للبدء</b>
+        <div id="downloadArea" style="margin-top:18px"></div>
+      </div></div>
+      <div class="step-actions">
+        <button class="ghost" id="backBtn" data-act="prevStep" style="visibility:hidden"><svg class="i"><use href="#i-back"/></svg>رجوع</button>
+        <button class="primary" id="nextBtn" data-act="nextStep">التالي<svg class="i"><use href="#i-next"/></svg></button>
+      </div>
+    </div>
+  </section>
+
+  <section id="admin" class="page">
+    <div class="section-title"><h3>لوحة الأدمن</h3><button class="ghost sm" data-act="loadAdmin"><svg class="i" style="width:16px;height:16px"><use href="#i-bolt"/></svg>تحديث</button></div>
+    <div class="stats" id="adminStats"></div>
+    <div class="section-title"><h3>النسخ آخر 7 أيام</h3></div>
+    <div class="card"><div class="chart" id="adminChart"></div></div>
+    <div class="section-title"><h3>المستخدمين</h3><span class="muted" id="uCount"></span></div>
+    <div class="tablewrap"><table><thead><tr><th>المستخدم</th><th>الطريقة</th><th>النسخ</th><th>مرات الدخول</th><th>آخر دخول</th><th>انضم</th></tr></thead><tbody id="adminUsers"></tbody></table></div>
+    <div class="section-title"><h3>كل النسخ</h3><span class="muted" id="bCount"></span></div>
+    <div class="tablewrap"><table><thead><tr><th>البوت</th><th>الرقم</th><th>صاحبه</th><th>التاريخ</th><th></th></tr></thead><tbody id="adminBots"></tbody></table></div>
+  </section>
+
+  <footer>ERROR 404 • BOT FACTORY</footer>
+</div>
+
+<div class="overlay" id="overlay" data-act="closeMenu"></div>
+<aside class="drawer" id="drawer" aria-hidden="true">
+  <div class="dhead"><div class="avatar m" id="dAvatar"></div><div><b id="dName"></b><small id="dEmail"></small></div></div>
+  <nav class="nav">
+    <button data-act="go" data-page="home" data-nav="home"><svg class="i"><use href="#i-home"/></svg>الرئيسية</button>
+    <button data-act="go" data-page="profile" data-nav="profile"><svg class="i"><use href="#i-user"/></svg>البروفايل</button>
+    <button data-act="startCreate" data-nav="create"><svg class="i"><use href="#i-bot"/></svg>صنع بوت</button>
+    <button data-act="go" data-page="admin" data-nav="admin" id="navAdmin" class="hide"><svg class="i"><use href="#i-shield"/></svg>لوحة الأدمن</button>
+  </nav>
+  <button class="logout" data-act="logout"><svg class="i"><use href="#i-logout"/></svg>تسجيل الخروج</button>
+</aside>
+
+<div id="toast"></div>
+
+<div class="modal" id="editModal"><div class="modal-box">
+  <h3>تعديل النسخة<button class="iconbtn" style="width:36px;height:36px" data-act="closeEdit"><svg class="i"><use href="#i-close"/></svg></button></h3>
+  <div class="field"><label>اسم البوت</label><input id="editName"></div>
+  <div class="field"><label>رقم البوت</label><input id="editNumber" dir="ltr"></div>
+  <div class="field"><label>المطورون (عربي)</label><input id="editDevAr"></div>
+  <div class="field"><label>Developers (English)</label><input id="editDevEn" dir="ltr"></div>
+  <div class="field"><label>أرقام المطورين</label><input id="editDevNumbers" dir="ltr"></div>
+  <div class="field"><label>اسم القناة</label><input id="editChannel"></div>
+  <div class="field"><label>ID القناة</label><input id="editChannelId" dir="ltr"></div>
+  <button class="primary" data-act="saveEdit"><svg class="i"><use href="#i-check"/></svg>حفظ التعديل</button>
+</div></div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+<script type="module">
+import {initializeApp} from "https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js";
+import {getAuth,onAuthStateChanged,signInWithPopup,GoogleAuthProvider,signInWithEmailAndPassword,createUserWithEmailAndPassword,updateProfile,sendEmailVerification,sendPasswordResetEmail,signOut} from "https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js";
+import {getFirestore,doc,getDoc,setDoc,updateDoc,addDoc,deleteDoc,collection,query,where,getDocs,serverTimestamp,increment} from "https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js";
+
+/* ============ ✏️ الإعدادات — غيّر دول بس ============ */
+const FIREBASE_CONFIG = {           // من Firebase Console ← Project settings ← Your apps ← Web app
+  apiKey: "AIzaSyCd2lQ6rQFPJRRGReq9pFu0IqqTClNEu3k",
+  authDomain: "love-ece13.firebaseapp.com",
+  projectId: "love-ece13",
+  storageBucket: "love-ece13.firebasestorage.app",
+  messagingSenderId: "629134080131",
+  appId: "1:629134080131:web:ed7984536666d36e0ac3b6"
+};
+const ADMIN_EMAILS = ["moreand458@gmail.com"];   // إيميلك (نفس اللي في firestore.rules)
+const TEMPLATE_URL = "VAELMORE_MINI.zip";              // القالب اللي الناس بتعمل منه نسخها
+/* ==================================================== */
+
+const $ = id => document.getElementById(id);
+const esc = s => String(s ?? '').replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m]));
+const ico = n => `<svg class="i"><use href="#i-${n}"/></svg>`;
+const USER_SVG = '<svg class="i"><use href="#i-user"/></svg>';
+const configured = !FIREBASE_CONFIG.apiKey.startsWith("PASTE");
+let auth, db, me = null, profile = null, myBots = [], isAdmin = false, step = 1, editingId = null, authMode = 'login', pendingName = '', busy = false;
+
+function toast(t){ $('toast').textContent = t; $('toast').classList.add('show'); clearTimeout(toast.t); toast.t = setTimeout(() => $('toast').classList.remove('show'), 2600); }
+const safeImg = u => (typeof u === 'string' && /^(data:image\/|https:\/\/)/.test(u)) ? u : '';
+function setAvatar(el, url){ url = safeImg(url); el.style.backgroundImage = url ? `url("${url}")` : ''; el.innerHTML = url ? '' : USER_SVG; }
+const fmtDate = t => { const d = t?.toDate ? t.toDate() : null; return d ? d.toLocaleDateString('ar-EG', {day:'numeric', month:'short', year:'numeric'}) : '—'; };
+const fmtTime = t => { const d = t?.toDate ? t.toDate() : null; return d ? d.toLocaleString('ar-EG', {day:'numeric', month:'short', hour:'2-digit', minute:'2-digit'}) : '—'; };
+const authErr = e => ({
+  'auth/invalid-credential':'البريد أو كلمة المرور غلط', 'auth/wrong-password':'كلمة المرور غلط', 'auth/user-not-found':'مفيش حساب بالبريد ده',
+  'auth/email-already-in-use':'البريد ده مسجل قبل كده', 'auth/weak-password':'كلمة المرور ضعيفة (6 حروف على الأقل)', 'auth/invalid-email':'البريد غير صحيح',
+  'auth/popup-closed-by-user':'اتقفل نافذة جوجل', 'auth/too-many-requests':'محاولات كتير، جرب بعد شوية', 'auth/network-request-failed':'مشكلة في الإنترنت',
+  'auth/unauthorized-domain':'الدومين ده مش مضاف في Firebase ← Authentication ← Settings ← Authorized domains',
+  'auth/operation-not-allowed':'طريقة الدخول دي مش مفعّلة في Firebase ← Authentication ← Sign-in method'
+}[e?.code] || (e?.message || 'حصلت مشكلة'));
+
+/* ---------- واجهة ---------- */
+function show(view){ $('authView').classList.toggle('hide', view !== 'auth'); $('appView').classList.toggle('hide', view !== 'app'); }
+function closeMenu(){ $('drawer').classList.remove('open'); $('overlay').classList.remove('open'); $('drawer').setAttribute('aria-hidden','true'); }
+function openMenu(){ $('drawer').classList.add('open'); $('overlay').classList.add('open'); $('drawer').setAttribute('aria-hidden','false'); }
+function go(id){
+  if (id === 'admin' && !isAdmin) return;
+  document.querySelectorAll('.page').forEach(p => p.classList.toggle('active', p.id === id));
+  document.querySelectorAll('[data-nav]').forEach(b => b.classList.toggle('on', b.dataset.nav === id));
+  closeMenu(); window.scrollTo(0,0);
+  if (id === 'admin') loadAdmin();
+  if (id === 'profile' || id === 'home') renderBots();
+}
+function renderMe(){
+  const name = profile?.name || me.displayName || me.email.split('@')[0];
+  setAvatar($('topAvatar'), profile?.photo); setAvatar($('dAvatar'), profile?.photo); setAvatar($('profAvatar'), profile?.photo);
+  $('dName').textContent = name; $('dEmail').textContent = me.email; $('profEmail').textContent = me.email;
+  if (document.activeElement !== $('profName')) $('profName').value = name;
+  $('navAdmin').classList.toggle('hide', !isAdmin);
+  $('sSince').textContent = fmtDate(profile?.createdAt);
+}
+
+/* ---------- تسجيل الدخول ---------- */
+async function ensureUserDoc(u){
+  const ref = doc(db, 'users', u.uid), snap = await getDoc(ref);
+  const provider = u.providerData[0]?.providerId === 'google.com' ? 'google' : 'email';
+  if (!snap.exists()){
+    const data = { name: pendingName || u.displayName || u.email.split('@')[0], email: u.email, photo: safeImg(u.photoURL), provider, createdAt: serverTimestamp(), lastLogin: serverTimestamp(), loginCount: 1 };
+    await setDoc(ref, data); profile = { ...data, createdAt: { toDate: () => new Date() } };
+  } else {
+    await updateDoc(ref, { lastLogin: serverTimestamp(), loginCount: increment(1) });
+    profile = snap.data();
+  }
+}
+async function loadMine(){
+  const s = await getDocs(query(collection(db, 'bots'), where('uid', '==', me.uid)));
+  myBots = s.docs.map(d => ({ id: d.id, ...d.data() })).sort((a,b) => (b.createdAt?.seconds||0) - (a.createdAt?.seconds||0));
+}
+async function emailAuth(){
+  if (busy) return; const email = $('aEmail').value.trim(), pass = $('aPass').value;
+  if (!email || !pass) return toast('اكتب البريد وكلمة المرور');
+  busy = true; $('authSubmit').disabled = true;
+  try {
+    if (authMode === 'signup'){
+      const name = $('aName').value.trim(); if (!name){ toast('اكتب اسمك'); return; }
+      pendingName = name;
+      const c = await createUserWithEmailAndPassword(auth, email, pass);
+      await updateProfile(c.user, { displayName: name });
+      sendEmailVerification(c.user).catch(() => {});
+      toast('تم إنشاء الحساب — وصلك إيميل تفعيل');
+    } else await signInWithEmailAndPassword(auth, email, pass);
+  } catch (e) { toast(authErr(e)); }
+  finally { busy = false; $('authSubmit').disabled = false; }
+}
+async function google(){ try { await signInWithPopup(auth, new GoogleAuthProvider()); } catch (e) { toast(authErr(e)); } }
+async function reset(){
+  const email = $('aEmail').value.trim(); if (!email) return toast('اكتب بريدك الأول');
+  try { await sendPasswordResetEmail(auth, email); toast('بعتنالك رابط تغيير كلمة المرور'); } catch (e) { toast(authErr(e)); }
+}
+function authTab(t){
+  authMode = t; $('tabLogin').classList.toggle('on', t === 'login'); $('tabSignup').classList.toggle('on', t === 'signup');
+  $('nameField').classList.toggle('hide', t !== 'signup'); $('authSubmit').textContent = t === 'signup' ? 'إنشاء حساب' : 'دخول';
+  $('aPass').autocomplete = t === 'signup' ? 'new-password' : 'current-password';
+}
+
+/* ---------- البروفايل ---------- */
+async function saveProfile(){
+  const name = $('profName').value.trim(); if (!name) return toast('اكتب اسمك');
+  try { await updateDoc(doc(db, 'users', me.uid), { name }); profile.name = name; renderMe(); toast('تم حفظ البروفايل'); } catch (e) { toast('مقدرتش أحفظ: ' + e.message); }
+}
+function resizePhoto(file){
+  return new Promise((res, rej) => {
+    const img = new Image(), url = URL.createObjectURL(file);
+    img.onload = () => {
+      const S = 192, c = document.createElement('canvas'); c.width = c.height = S;
+      const m = Math.min(img.width, img.height), sx = (img.width - m) / 2, sy = (img.height - m) / 2;
+      c.getContext('2d').drawImage(img, sx, sy, m, m, 0, 0, S, S); URL.revokeObjectURL(url); res(c.toDataURL('image/jpeg', .82));
+    };
+    img.onerror = () => rej(new Error('الصورة مش مقروءة')); img.src = url;
+  });
+}
+async function setPhoto(photo){
+  try { await updateDoc(doc(db, 'users', me.uid), { photo }); profile.photo = photo; renderMe(); toast(photo ? 'تم تغيير الصورة' : 'تم حذف الصورة'); } catch (e) { toast('مقدرتش أحفظ الصورة: ' + e.message); }
+}
+
+/* ---------- صنع البوت ---------- */
+const F = ['botName','botNumber','devAr','devEn','devNumbers','channelName','channelId'];
+const digits = s => String(s || '').replace(/\D/g, '');
+const splitNames = s => String(s || '').split(/[•,،|\n]+/).map(x => x.trim()).filter(Boolean);
+function normChannel(s){ s = String(s || '').trim(); if (/^\d{10,}$/.test(s)) return s + '@newsletter'; return /^\d+@newsletter$/.test(s) ? s : ''; }
+function startCreate(){ F.forEach(x => $(x).value = ''); step = 1; updateStep(); $('downloadArea').innerHTML = ''; $('buildBar').style.width = '0'; $('buildStatus').textContent = 'اضغط إنشاء وتحميل للبدء'; go('create'); }
+function updateStep(){
+  document.querySelectorAll('.step').forEach(s => s.classList.toggle('active', +s.dataset.step === step));
+  $('stepLabel').textContent = step + ' / 5'; $('progressText').textContent = (step*20) + '%'; $('progressBar').style.width = (step*20) + '%';
+  $('backBtn').style.visibility = step === 1 ? 'hidden' : 'visible';
+  $('nextBtn').innerHTML = step === 5 ? ico('download') + 'إنشاء وتحميل' : 'التالي' + ico('next');
+  if (step === 4) renderReview();
+}
+function valid(){
+  if (step === 1){
+    if (!$('botName').value.trim()) { toast('اكتب اسم البوت'); return false; }
+    const n = digits($('botNumber').value); if (n.length < 8 || n.length > 15) { toast('رقم البوت غير صحيح'); return false; }
+  }
+  if (step === 2){
+    const nums = $('devNumbers').value.split(/[,،\s]+/).filter(Boolean).map(digits);
+    if (!nums.length || nums.some(n => n.length < 8 || n.length > 15)) { toast('اكتب رقم مطور واحد على الأقل بشكل صحيح'); return false; }
+  }
+  return true;
+}
+function renderReview(){
+  const ch = $('channelId').value.trim(), okCh = normChannel(ch);
+  const d = { 'اسم البوت': $('botName').value, 'رقم البوت': digits($('botNumber').value), 'المطورون': $('devAr').value || $('devEn').value, 'أرقام المطورين': $('devNumbers').value, 'القناة': $('channelName').value, 'ID القناة': ch ? (okCh || 'غير صالح — هيتجاهل') : 'الافتراضي' };
+  $('review').innerHTML = Object.entries(d).map(([k,v]) => `<div><span>${esc(k)}</span><b>${esc(v || '—')}</b></div>`).join('');
+}
+function readForm(){ return { name: $('botName').value.trim(), number: digits($('botNumber').value), devAr: $('devAr').value.trim(), devEn: $('devEn').value.trim(), devNumbers: $('devNumbers').value.trim(), channelName: $('channelName').value.trim(), channelId: normChannel($('channelId').value) }; }
+function botConfig(b){
+  const ar = splitNames(b.devAr), en = splitNames(b.devEn);
+  const owners = String(b.devNumbers || '').split(/[,،\s]+/).filter(Boolean).map(digits).filter(n => n.length >= 8).map((n, i) => ({ name: ar[i] || en[i] || 'Owner', jid: n + '@s.whatsapp.net' }));
+  return { botName: b.name, botNumber: b.number, owners, channelName: b.channelName || '', channelId: b.channelId || '' };
+}
+async function makeZip(b){
+  if (typeof JSZip === 'undefined') throw new Error('مكتبة الـ ZIP مش اتحملت — اتأكد من الإنترنت');
+  let buf; try { const r = await fetch(TEMPLATE_URL); if (!r.ok) throw 0; buf = await r.arrayBuffer(); } catch { throw new Error('ملف القالب VAELMORE_MINI.zip مش موجود جنب index.html (لازم الموقع يتفتح من استضافة مش من الملف مباشرة)'); }
+  const zip = await JSZip.loadAsync(buf), old = Object.keys(zip.files).find(n => n.endsWith('bot.config.json'));
+  zip.file(old || 'vaelmore-bot/bot.config.json', JSON.stringify(botConfig(b), null, 2));
+  const blob = await zip.generateAsync({ type: 'blob', compression: 'DEFLATE' });
+  const a = document.createElement('a'), u = URL.createObjectURL(blob);
+  a.href = u; a.download = (b.name.replace(/[^a-z0-9_-]+/gi, '_') || 'bot') + '.zip'; document.body.appendChild(a); a.click(); a.remove(); setTimeout(() => URL.revokeObjectURL(u), 4000);
+}
+async function buildBot(){
+  if (busy) return; busy = true; $('nextBtn').disabled = $('backBtn').disabled = true;
+  const data = readForm();
+  try {
+    $('buildStatus').textContent = 'جاري حفظ النسخة...'; $('buildBar').style.width = '30%';
+    const ref = await addDoc(collection(db, 'bots'), { ...data, uid: me.uid, ownerEmail: me.email, ownerName: profile?.name || '', downloads: 1, createdAt: serverTimestamp() });
+    $('buildStatus').textContent = 'جاري تجهيز الملف...'; $('buildBar').style.width = '65%';
+    await makeZip(data);
+    $('buildBar').style.width = '100%'; $('buildStatus').textContent = 'تم! النسخة نزلت على جهازك';
+    $('downloadArea').innerHTML = `<button class="ghost" data-act="dl" data-id="${esc(ref.id)}">${ico('download')}تحميل تاني</button>`;
+    await loadMine(); renderBots(); toast('تم إنشاء النسخة');
+  } catch (e) { $('buildStatus').textContent = 'حصلت مشكلة'; toast(e.message); }
+  finally { busy = false; $('nextBtn').disabled = $('backBtn').disabled = false; }
+}
+async function download(id){
+  const b = myBots.find(x => x.id === id); if (!b) return;
+  try { await makeZip(b); updateDoc(doc(db, 'bots', id), { downloads: increment(1) }).then(loadMine).then(renderBots).catch(() => {}); toast('تم التحميل'); } catch (e) { toast(e.message); }
+}
+
+/* ---------- نسخي ---------- */
+function botCard(b){
+  return `<div class="card bot-card"><h4>${esc(b.name)}</h4><p>رقم: <span dir="ltr">${esc(b.number)}</span></p><p>المطورون: ${esc(b.devAr || b.devEn || '—')}</p><p>القناة: ${esc(b.channelName || '—')}</p><p>${esc(fmtDate(b.createdAt))}</p>
+  <div class="actions"><button class="primary sm" data-act="dl" data-id="${esc(b.id)}">${ico('download')}تحميل</button><button class="ghost sm" data-act="edit" data-id="${esc(b.id)}">${ico('edit')}تعديل</button><button class="danger sm" data-act="del" data-id="${esc(b.id)}">${ico('trash')}حذف</button></div></div>`;
+}
+function renderBots(){
+  const empty = '<div class="empty">لا توجد نسخ حتى الآن.</div>';
+  $('homeCount').textContent = myBots.length + ' نسخة';
+  $('homeBots').innerHTML = myBots.length ? myBots.slice(0, 4).map(botCard).join('') : empty;
+  $('profileBots').innerHTML = myBots.length ? myBots.map(botCard).join('') : empty;
+  $('sBots').textContent = myBots.length; $('sDl').textContent = myBots.reduce((s, b) => s + (b.downloads || 0), 0);
+}
+function editBot(id){
+  const b = myBots.find(x => x.id === id); if (!b) return; editingId = id;
+  $('editName').value = b.name; $('editNumber').value = b.number; $('editDevAr').value = b.devAr || ''; $('editDevEn').value = b.devEn || '';
+  $('editDevNumbers').value = b.devNumbers || ''; $('editChannel').value = b.channelName || ''; $('editChannelId').value = b.channelId || '';
+  $('editModal').classList.add('open');
+}
+async function saveEdit(){
+  const b = myBots.find(x => x.id === editingId); if (!b) return;
+  const n = { name: $('editName').value.trim(), number: digits($('editNumber').value), devAr: $('editDevAr').value.trim(), devEn: $('editDevEn').value.trim(), devNumbers: $('editDevNumbers').value.trim(), channelName: $('editChannel').value.trim(), channelId: normChannel($('editChannelId').value) };
+  if (!n.name || n.number.length < 8) return toast('اسم ورقم البوت مطلوبين');
+  try { await updateDoc(doc(db, 'bots', editingId), n); Object.assign(b, n); $('editModal').classList.remove('open'); renderBots(); toast('تم حفظ التعديل — حمّل النسخة تاني عشان تتطبق'); } catch (e) { toast(e.message); }
+}
+async function delBot(id){
+  if (!confirm('حذف هذه النسخة؟')) return;
+  try { await deleteDoc(doc(db, 'bots', id)); myBots = myBots.filter(x => x.id !== id); renderBots(); toast('تم الحذف'); if (isAdmin && $('admin').classList.contains('active')) loadAdmin(); } catch (e) { toast(e.message); }
+}
+
+/* ---------- لوحة الأدمن ---------- */
+async function loadAdmin(){
+  if (!isAdmin) return;
+  try {
+    const [us, bs] = await Promise.all([getDocs(collection(db, 'users')), getDocs(collection(db, 'bots'))]);
+    const users = us.docs.map(d => ({ id: d.id, ...d.data() })), bots = bs.docs.map(d => ({ id: d.id, ...d.data() }));
+    const now = Date.now(), DAY = 864e5, ms = t => t?.toDate ? t.toDate().getTime() : 0, startToday = new Date().setHours(0,0,0,0);
+    const perUser = {}; bots.forEach(b => perUser[b.uid] = (perUser[b.uid] || 0) + 1);
+    const S = [
+      [users.length, 'إجمالي المستخدمين'], [bots.length, 'إجمالي النسخ'],
+      [users.filter(u => ms(u.lastLogin) >= startToday).length, 'دخلوا النهارده'], [users.filter(u => now - ms(u.createdAt) < 7*DAY).length, 'مستخدمين جدد (7 أيام)'],
+      [bots.filter(b => now - ms(b.createdAt) < 7*DAY).length, 'نسخ جديدة (7 أيام)'], [bots.reduce((s, b) => s + (b.downloads || 0), 0), 'إجمالي التحميلات'],
+      [users.reduce((s, u) => s + (u.loginCount || 0), 0), 'إجمالي مرات الدخول'], [users.filter(u => u.provider === 'google').length + ' / ' + users.filter(u => u.provider !== 'google').length, 'جوجل / بريد']
+    ];
+    $('adminStats').innerHTML = S.map(([v, l]) => `<div class="stat"><b>${esc(v)}</b><span>${esc(l)}</span></div>`).join('');
+    const days = [...Array(7)].map((_, i) => { const d = new Date(); d.setHours(0,0,0,0); d.setDate(d.getDate() - (6 - i)); return d; });
+    const counts = days.map(d => bots.filter(b => { const t = ms(b.createdAt); return t >= d.getTime() && t < d.getTime() + DAY; }).length), mx = Math.max(1, ...counts);
+    $('adminChart').innerHTML = days.map((d, i) => `<div><span>${counts[i]}</span><i style="height:${Math.round(counts[i] / mx * 80)}%"></i><span>${d.toLocaleDateString('ar-EG', {weekday:'short'})}</span></div>`).join('');
+    users.sort((a, b) => ms(b.lastLogin) - ms(a.lastLogin)); $('uCount').textContent = users.length + ' مستخدم';
+    $('adminUsers').innerHTML = users.map(u => `<tr><td><div class="who"><div class="avatar s" style="width:32px;height:32px;${safeImg(u.photo) ? `background-image:url('${esc(safeImg(u.photo))}')` : ''}">${safeImg(u.photo) ? '' : USER_SVG}</div><div><b>${esc(u.name)}</b><div class="muted" dir="ltr" style="text-align:right;font-size:11px">${esc(u.email)}</div></div></div></td><td>${u.provider === 'google' ? 'جوجل' : 'بريد'}</td><td>${perUser[u.id] || 0}</td><td>${u.loginCount || 0}</td><td>${esc(fmtTime(u.lastLogin))}</td><td>${esc(fmtDate(u.createdAt))}</td></tr>`).join('') || '<tr><td colspan="6" class="muted">لا يوجد</td></tr>';
+    bots.sort((a, b) => ms(b.createdAt) - ms(a.createdAt)); $('bCount').textContent = bots.length + ' نسخة';
+    $('adminBots').innerHTML = bots.map(b => `<tr><td><b>${esc(b.name)}</b></td><td dir="ltr">${esc(b.number)}</td><td>${esc(b.ownerName || '')} <span class="muted" dir="ltr">${esc(b.ownerEmail || '')}</span></td><td>${esc(fmtTime(b.createdAt))}</td><td><button class="danger sm" data-act="del" data-id="${esc(b.id)}" aria-label="حذف">${ico('trash')}</button></td></tr>`).join('') || '<tr><td colspan="5" class="muted">لا يوجد</td></tr>';
+  } catch (e) { toast('مقدرتش أجيب البيانات — تأكد من قواعد Firestore: ' + e.message); }
+}
+
+/* ---------- ربط الأحداث ---------- */
+const ACT = {
+  openMenu, closeMenu, go: t => go(t.dataset.page), authTab: t => authTab(t.dataset.tab), google, emailAuth, reset,
+  startCreate, nextStep: () => { if (step < 5){ if (!valid()) return; step++; updateStep(); } else buildBot(); },
+  prevStep: () => { if (step > 1){ step--; updateStep(); } },
+  logout: async () => { closeMenu(); await signOut(auth); }, pickPhoto: () => $('photoInput').click(), saveProfile, removePhoto: () => setPhoto(''),
+  dl: t => download(t.dataset.id), edit: t => editBot(t.dataset.id), del: t => delBot(t.dataset.id), saveEdit, closeEdit: () => $('editModal').classList.remove('open'), loadAdmin
+};
+document.addEventListener('click', e => { const t = e.target.closest('[data-act]'); if (t && ACT[t.dataset.act]) ACT[t.dataset.act](t); });
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeMenu(); if (e.key === 'Enter' && !$('authView').classList.contains('hide') && e.target.tagName === 'INPUT') emailAuth(); });
+$('photoInput').addEventListener('change', async e => { const f = e.target.files[0]; e.target.value = ''; if (!f) return; try { await setPhoto(await resizePhoto(f)); } catch (x) { toast(x.message); } });
+
+/* ---------- تشغيل ---------- */
+if (!configured){
+  show('auth'); $('setupNote').classList.remove('hide');
+  $('setupNote').innerHTML = 'لازم تحط بيانات Firebase بتاعتك في أول سكربت <b>index.html</b> (FIREBASE_CONFIG) وإيميل الأدمن في ADMIN_EMAILS. بعدها الدخول هيشتغل.';
+} else {
+  const app = initializeApp(FIREBASE_CONFIG); auth = getAuth(app); db = getFirestore(app); auth.languageCode = 'ar';
+  onAuthStateChanged(auth, async u => {
+    if (!u){ me = profile = null; myBots = []; isAdmin = false; closeMenu(); show('auth'); return; }
+    me = u;
+    try { await ensureUserDoc(u); await loadMine(); }
+    catch (e) { toast('مشكلة في قاعدة البيانات — اتأكد من قواعد Firestore: ' + e.message); profile = profile || { name: u.displayName || u.email.split('@')[0] }; }
+    isAdmin = u.emailVerified && ADMIN_EMAILS.map(x => x.toLowerCase()).includes((u.email || '').toLowerCase());
+    renderMe(); renderBots(); show('app'); go('home');
+    if (!u.emailVerified && u.providerData[0]?.providerId === 'password') toast('فعّل بريدك من الإيميل اللي وصلك');
+  });
+}
+</script>
+</body>
+</html>
