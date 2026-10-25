@@ -1,8 +1,8 @@
 {
   "hosting": {
     "site": "error404-c548",
-    "public": ".",
-    "ignore": ["firebase.json", "firestore.rules", "**/.*", "**/node_modules/**"]
+    "public": "public",
+    "ignore": ["firebase.json", "**/.*", "**/node_modules/**"]
   },
   "firestore": { "rules": "firestore.rules" }
 }

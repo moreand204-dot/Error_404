@@ -1,0 +1,389 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "framework": null,
+  "buildCommand": null,
+  "installCommand": null,
+  "outputDirectory": "public",
+  "cleanUrls": false,
+  "trailingSlash": false,
+  "functions": {
+    "api/template.js": {
+      "includeFiles": "api/_private/**",
+      "maxDuration": 15
+    },
+    "api/trap.js": {
+      "maxDuration": 10
+    }
+  },
+  "rewrites": [
+    {
+      "source": "/admin",
+      "destination": "/api/trap?p=/admin"
+    },
+    {
+      "source": "/admin/",
+      "destination": "/api/trap?p=/admin/"
+    },
+    {
+      "source": "/administrator",
+      "destination": "/api/trap?p=/administrator"
+    },
+    {
+      "source": "/admin.html",
+      "destination": "/api/trap?p=/admin.html"
+    },
+    {
+      "source": "/admin.php",
+      "destination": "/api/trap?p=/admin.php"
+    },
+    {
+      "source": "/admin-panel",
+      "destination": "/api/trap?p=/admin-panel"
+    },
+    {
+      "source": "/admin-login",
+      "destination": "/api/trap?p=/admin-login"
+    },
+    {
+      "source": "/adminpanel",
+      "destination": "/api/trap?p=/adminpanel"
+    },
+    {
+      "source": "/dashboard-admin",
+      "destination": "/api/trap?p=/dashboard-admin"
+    },
+    {
+      "source": "/secret-admin",
+      "destination": "/api/trap?p=/secret-admin"
+    },
+    {
+      "source": "/cpanel",
+      "destination": "/api/trap?p=/cpanel"
+    },
+    {
+      "source": "/login.php",
+      "destination": "/api/trap?p=/login.php"
+    },
+    {
+      "source": "/wp-login.php",
+      "destination": "/api/trap?p=/wp-login.php"
+    },
+    {
+      "source": "/xmlrpc.php",
+      "destination": "/api/trap?p=/xmlrpc.php"
+    },
+    {
+      "source": "/phpmyadmin",
+      "destination": "/api/trap?p=/phpmyadmin"
+    },
+    {
+      "source": "/pma",
+      "destination": "/api/trap?p=/pma"
+    },
+    {
+      "source": "/server-status",
+      "destination": "/api/trap?p=/server-status"
+    },
+    {
+      "source": "/console",
+      "destination": "/api/trap?p=/console"
+    },
+    {
+      "source": "/shell.php",
+      "destination": "/api/trap?p=/shell.php"
+    },
+    {
+      "source": "/.env",
+      "destination": "/api/trap?p=/.env"
+    },
+    {
+      "source": "/.env.local",
+      "destination": "/api/trap?p=/.env.local"
+    },
+    {
+      "source": "/.env.production",
+      "destination": "/api/trap?p=/.env.production"
+    },
+    {
+      "source": "/.env.backup",
+      "destination": "/api/trap?p=/.env.backup"
+    },
+    {
+      "source": "/.env.example",
+      "destination": "/api/trap?p=/.env.example"
+    },
+    {
+      "source": "/.DS_Store",
+      "destination": "/api/trap?p=/.DS_Store"
+    },
+    {
+      "source": "/config.json",
+      "destination": "/api/trap?p=/config.json"
+    },
+    {
+      "source": "/config.php",
+      "destination": "/api/trap?p=/config.php"
+    },
+    {
+      "source": "/firebase.json",
+      "destination": "/api/trap?p=/firebase.json"
+    },
+    {
+      "source": "/firestore.rules",
+      "destination": "/api/trap?p=/firestore.rules"
+    },
+    {
+      "source": "/vercel.json",
+      "destination": "/api/trap?p=/vercel.json"
+    },
+    {
+      "source": "/package.json",
+      "destination": "/api/trap?p=/package.json"
+    },
+    {
+      "source": "/package-lock.json",
+      "destination": "/api/trap?p=/package-lock.json"
+    },
+    {
+      "source": "/serviceAccountKey.json",
+      "destination": "/api/trap?p=/serviceAccountKey.json"
+    },
+    {
+      "source": "/firebase-adminsdk.json",
+      "destination": "/api/trap?p=/firebase-adminsdk.json"
+    },
+    {
+      "source": "/service-account.json",
+      "destination": "/api/trap?p=/service-account.json"
+    },
+    {
+      "source": "/credentials.json",
+      "destination": "/api/trap?p=/credentials.json"
+    },
+    {
+      "source": "/secrets.json",
+      "destination": "/api/trap?p=/secrets.json"
+    },
+    {
+      "source": "/VAELMORE_MINI.zip",
+      "destination": "/api/trap?p=/VAELMORE_MINI.zip"
+    },
+    {
+      "source": "/vaelmore-bot.zip",
+      "destination": "/api/trap?p=/vaelmore-bot.zip"
+    },
+    {
+      "source": "/backup.zip",
+      "destination": "/api/trap?p=/backup.zip"
+    },
+    {
+      "source": "/backup.sql",
+      "destination": "/api/trap?p=/backup.sql"
+    },
+    {
+      "source": "/db.sql",
+      "destination": "/api/trap?p=/db.sql"
+    },
+    {
+      "source": "/database.sql",
+      "destination": "/api/trap?p=/database.sql"
+    },
+    {
+      "source": "/dump.sql",
+      "destination": "/api/trap?p=/dump.sql"
+    },
+    {
+      "source": "/site.zip",
+      "destination": "/api/trap?p=/site.zip"
+    },
+    {
+      "source": "/www.zip",
+      "destination": "/api/trap?p=/www.zip"
+    },
+    {
+      "source": "/public.zip",
+      "destination": "/api/trap?p=/public.zip"
+    },
+    {
+      "source": "/api/_private/VAELMORE_MINI.zip",
+      "destination": "/api/trap?p=/api/_private/VAELMORE_MINI.zip"
+    },
+    {
+      "source": "/api/admin",
+      "destination": "/api/trap?p=/api/admin"
+    },
+    {
+      "source": "/api/users",
+      "destination": "/api/trap?p=/api/users"
+    },
+    {
+      "source": "/api/bots",
+      "destination": "/api/trap?p=/api/bots"
+    },
+    {
+      "source": "/api/debug",
+      "destination": "/api/trap?p=/api/debug"
+    },
+    {
+      "source": "/api/config",
+      "destination": "/api/trap?p=/api/config"
+    },
+    {
+      "source": "/api/internal",
+      "destination": "/api/trap?p=/api/internal"
+    },
+    {
+      "source": "/api/v1/admin",
+      "destination": "/api/trap?p=/api/v1/admin"
+    },
+    {
+      "source": "/api/v1/users",
+      "destination": "/api/trap?p=/api/v1/users"
+    },
+    {
+      "source": "/admin-panel/:path*",
+      "destination": "/api/trap?p=/admin-panel/:path*"
+    },
+    {
+      "source": "/admin/:path*",
+      "destination": "/api/trap?p=/admin/:path*"
+    },
+    {
+      "source": "/wp-admin/:path*",
+      "destination": "/api/trap?p=/wp-admin/:path*"
+    },
+    {
+      "source": "/wp-content/:path*",
+      "destination": "/api/trap?p=/wp-content/:path*"
+    },
+    {
+      "source": "/wp-includes/:path*",
+      "destination": "/api/trap?p=/wp-includes/:path*"
+    },
+    {
+      "source": "/phpmyadmin/:path*",
+      "destination": "/api/trap?p=/phpmyadmin/:path*"
+    },
+    {
+      "source": "/.git/:path*",
+      "destination": "/api/trap?p=/.git/:path*"
+    },
+    {
+      "source": "/.svn/:path*",
+      "destination": "/api/trap?p=/.svn/:path*"
+    },
+    {
+      "source": "/.vercel/:path*",
+      "destination": "/api/trap?p=/.vercel/:path*"
+    },
+    {
+      "source": "/.well-known/security-backup/:path*",
+      "destination": "/api/trap?p=/.well-known/security-backup/:path*"
+    },
+    {
+      "source": "/backup/:path*",
+      "destination": "/api/trap?p=/backup/:path*"
+    },
+    {
+      "source": "/backups/:path*",
+      "destination": "/api/trap?p=/backups/:path*"
+    },
+    {
+      "source": "/private/:path*",
+      "destination": "/api/trap?p=/private/:path*"
+    },
+    {
+      "source": "/secret-admin/:path*",
+      "destination": "/api/trap?p=/secret-admin/:path*"
+    },
+    {
+      "source": "/cgi-bin/:path*",
+      "destination": "/api/trap?p=/cgi-bin/:path*"
+    },
+    {
+      "source": "/actuator/:path*",
+      "destination": "/api/trap?p=/actuator/:path*"
+    },
+    {
+      "source": "/manager/:path*",
+      "destination": "/api/trap?p=/manager/:path*"
+    },
+    {
+      "source": "/api/admin/:path*",
+      "destination": "/api/trap?p=/api/admin/:path*"
+    },
+    {
+      "source": "/api/internal/:path*",
+      "destination": "/api/trap?p=/api/internal/:path*"
+    },
+    {
+      "source": "/api/_private/:path*",
+      "destination": "/api/trap?p=/api/_private/:path*"
+    },
+    {
+      "source": "/node_modules/:path*",
+      "destination": "/api/trap?p=/node_modules/:path*"
+    },
+    {
+      "source": "/vendor/:path*",
+      "destination": "/api/trap?p=/vendor/:path*"
+    },
+    {
+      "source": "/(.*)\\.(php|asp|aspx|jsp|cgi|sql|bak|old|swp|tar|gz|7z|rar|zip|log)",
+      "destination": "/api/trap?p=/$1.$2"
+    }
+  ],
+  "headers": [
+    {
+      "source": "/(.*)",
+      "headers": [
+        {
+          "key": "Strict-Transport-Security",
+          "value": "max-age=63072000; includeSubDomains"
+        },
+        {
+          "key": "X-Content-Type-Options",
+          "value": "nosniff"
+        },
+        {
+          "key": "X-Frame-Options",
+          "value": "DENY"
+        },
+        {
+          "key": "Referrer-Policy",
+          "value": "strict-origin-when-cross-origin"
+        },
+        {
+          "key": "Permissions-Policy",
+          "value": "camera=(), microphone=(), geolocation=(), payment=(), usb=(), interest-cohort=()"
+        },
+        {
+          "key": "Cross-Origin-Opener-Policy",
+          "value": "same-origin-allow-popups"
+        },
+        {
+          "key": "X-Permitted-Cross-Domain-Policies",
+          "value": "none"
+        }
+      ]
+    },
+    {
+      "source": "/((?!api/).*)",
+      "headers": [
+        {
+          "key": "Content-Security-Policy",
+          "value": "default-src 'self'; script-src 'self' https://www.gstatic.com https://cdnjs.cloudflare.com https://apis.google.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self' data:; connect-src 'self' https://*.googleapis.com https://*.firebaseio.com https://*.firebaseapp.com wss://*.firebaseio.com; frame-src https://accounts.google.com https://*.firebaseapp.com; object-src 'none'; base-uri 'none'; form-action 'self'; frame-ancestors 'none'; upgrade-insecure-requests"
+        }
+      ]
+    },
+    {
+      "source": "/api/(.*)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "no-store"
+        }
+      ]
+    }
+  ]
+}
