@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+Disallow: /admin-panel/
+Disallow: /secret-admin/
+Disallow: /backup/
+Disallow: /private/
+
+Sitemap: https://error404-xi-three.vercel.app/sitemap.xml
