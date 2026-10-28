@@ -1,11 +1,11 @@
 import {initializeApp} from "https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js";
-import {getAuth,onAuthStateChanged,signInWithPopup,GoogleAuthProvider,signInWithEmailAndPassword,createUserWithEmailAndPassword,updateProfile,sendEmailVerification,sendPasswordResetEmail,signOut} from "https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js";
+import {getAuth,onAuthStateChanged,signInWithPopup,signInWithRedirect,getRedirectResult,GoogleAuthProvider,signInWithEmailAndPassword,createUserWithEmailAndPassword,updateProfile,sendEmailVerification,sendPasswordResetEmail,signOut} from "https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js";
 import {getFirestore,doc,getDoc,setDoc,updateDoc,addDoc,deleteDoc,collection,query,where,getDocs,serverTimestamp,increment} from "https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js";
 
 /* ============ ✏️ الإعدادات — غيّر دول بس ============ */
 const FIREBASE_CONFIG = {           // من Firebase Console ← Project settings ← Your apps ← Web app
   apiKey: "AIzaSyCd2lQ6rQFPJRRGReq9pFu0IqqTClNEu3k",
-  authDomain: "love-ece13.firebaseapp.com",
+  authDomain: /^(localhost|127\.)/.test(location.hostname) ? "love-ece13.firebaseapp.com" : location.host,   // الدخول بيتم على دومين موقعك نفسه (مش firebaseapp.com) — بيتعمله بروكسي في vercel.json
   projectId: "love-ece13",
   storageBucket: "love-ece13.firebasestorage.app",
   messagingSenderId: "629134080131",
@@ -91,7 +91,14 @@ async function emailAuth(){
   } catch (e) { toast(authErr(e)); }
   finally { busy = false; $('authSubmit').disabled = false; }
 }
-async function google(){ try { await signInWithPopup(auth, new GoogleAuthProvider()); } catch (e) { toast(authErr(e)); } }
+async function google(){
+  const p = new GoogleAuthProvider(); p.setCustomParameters({ prompt: 'select_account' });
+  try { await signInWithPopup(auth, p); }
+  catch (e) {
+    if (e.code === 'auth/popup-blocked' || e.code === 'auth/operation-not-supported-in-this-environment'){ try { await signInWithRedirect(auth, p); } catch (x) { toast(authErr(x)); } }
+    else if (e.code !== 'auth/cancelled-popup-request') toast(authErr(e));
+  }
+}
 async function reset(){
   const email = $('aEmail').value.trim(); if (!email) return toast('اكتب بريدك الأول');
   try { await sendPasswordResetEmail(auth, email); toast('بعتنالك رابط تغيير كلمة المرور'); } catch (e) { toast(authErr(e)); }
@@ -368,7 +375,7 @@ if (!configured){
   show('auth'); $('setupNote').classList.remove('hide');
   $('setupNote').innerHTML = 'لازم تحط بيانات Firebase بتاعتك في أول سكربت <b>index.html</b> (FIREBASE_CONFIG) وإيميل الأدمن في ADMIN_EMAILS. بعدها الدخول هيشتغل.';
 } else {
-  const app = initializeApp(FIREBASE_CONFIG); auth = getAuth(app); db = getFirestore(app); auth.languageCode = 'ar';
+  const app = initializeApp(FIREBASE_CONFIG); auth = getAuth(app); db = getFirestore(app); auth.languageCode = 'ar'; getRedirectResult(auth).catch(e => toast(authErr(e)));
   onAuthStateChanged(auth, async u => {
     if (!u){ me = profile = null; myBots = []; isAdmin = false; closeMenu(); show('auth'); return; }
     me = u;
